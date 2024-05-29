@@ -1,0 +1,39 @@
+/* Home.css */
+
+.container {
+  margin: 20px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.table {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  color: #212529;
+  border: 1px solid #dee2e6;
+  border-collapse: collapse;
+  border-radius: 0.25rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem; /* Reduced padding for table cells */
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+  font-size: 0.9rem; /* Reduced font size */
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  color: #ffffff;
+  background-color: #0a2037;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
