@@ -3,24 +3,28 @@ import "../App.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const Signup = () => {
-  const [username, setUsername] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstLogin, setFirstLogin] = useState(false);
 
   const navigate = useNavigate();
+
+  axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8070/auth/signup", {
-        username,
+      .post("http://localhost:8070/auth/login", {
         email,
         password,
       })
       .then((res) => {
         if (res.data.status) {
-          navigate("/login");
+          // Navigate to the AddStudent page
+          navigate("/add");
+        } else {
+          console.log("Login failed:", res.data.message);
         }
       })
       .catch((err) => {
@@ -30,18 +34,7 @@ const Signup = () => {
   return (
     <div className="container sign-up-form mt-5">
       <form onSubmit={handleSubmit}>
-        <h2 className="text-center">Sign Up</h2>
-
-        <div className="mt-3">
-          <label htmlFor="username">Username : </label>
-          <br />
-          <input
-            type="text"
-            placeholder="Username"
-            className="form-control"
-            onChange={(e) => setUsername(e.target.value)}
-          ></input>
-        </div>
+        <h2 className="text-center">Login</h2>
 
         <div className="mt-3">
           <label htmlFor="email">Email : </label>
@@ -67,12 +60,12 @@ const Signup = () => {
 
         <div className="mt-3 text-center">
           <button type="submit" className="btn btn-primary start-50">
-            Signup
+            Login
           </button>
         </div>
         <div>
           <p>
-            Have an account ? <Link to="/login">Login</Link>
+            Don't have an account ? <Link to="/signup">Signup</Link>
           </p>
         </div>
       </form>
@@ -80,4 +73,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

@@ -24,7 +24,7 @@ const Home = () => {
       <h1>Student Management System</h1>
       <h3>Student List</h3>
 
-      <table class="table table-bordered">
+      <table className="table table-bordered">
         <thead className="thead-dark">
           <tr>
             <th style={{ width: "33%" }} scope="col">

@@ -4,11 +4,18 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 dotenv.config();
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", //which frontend do you want to access
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 8070;
 const URL = process.env.MONGODB_URL;

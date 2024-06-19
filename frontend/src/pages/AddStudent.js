@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./AddStudent.css";
 
 const AddStudent = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8070/auth/loggedin", { withCredentials: true })
+      .then((res) => {
+        if (res.data.status) {
+          setIsLoggedIn(true);
+        } else {
+          navigate("/login"); // Redirect to login page if not logged in
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate("/login"); // Handle error by redirecting to login page
+      });
+  }, [navigate]);
 
   const sendData = (e) => {
     e.preventDefault();
@@ -25,8 +45,13 @@ const AddStudent = () => {
       });
   };
 
+  if (!isLoggedIn) {
+    return null; // Or display a loading spinner while checking login status
+  }
+
   return (
     <form className="form-container mt-5" onSubmit={sendData}>
+      <h2 className="text-center">Add Student</h2>
       <div className="mb-3">
         <label for="name">Name</label>
         <input
@@ -63,10 +88,11 @@ const AddStudent = () => {
           }}
         />
       </div>
-
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <div className="text-center">
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </div>
     </form>
   );
 };
