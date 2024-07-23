@@ -1,9 +1,9 @@
 .form-container {
-  max-width: 500px; /* Adjust this value as needed */
+  max-width: 500px;
   margin: 0 auto;
-  padding: 20px; /* Optional: Add some padding for better aesthetics */
-  border: 1px solid #ccc; /* Optional: Add a border for better visibility */
-  border-radius: 8px; /* Optional: Add rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
 }

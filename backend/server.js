@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000", //which frontend do you want to access
+    origin: "http://localhost:3001", //which frontend do you want to access
     credentials: true,
   })
 );

@@ -5,6 +5,8 @@ import AddStudent from "../pages/AddStudent";
 import Home from "../pages/Home";
 import Signup from "../pages/Signup";
 import Login from "../pages/Login";
+import DeleteStudent from "../pages/DeleteStudent";
+import UpdateStudent from "../pages/UpdateStudent";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/add",
         element: <AddStudent />,
+      },
+      {
+        path: "/delete",
+        element: <DeleteStudent />,
+      },
+      {
+        path: "/update",
+        element: <UpdateStudent />,
       },
       {
         path: "/signup",

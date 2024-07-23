@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./AddStudent.css";
 
 const AddStudent = () => {
+  const [stuId, setStuId] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
@@ -31,10 +32,12 @@ const AddStudent = () => {
     e.preventDefault();
 
     const newStudent = {
+      stuId,
       name,
       age,
       gender,
     };
+
     axios
       .post("http://localhost:8070/student/add", newStudent)
       .then(() => {
@@ -53,7 +56,19 @@ const AddStudent = () => {
     <form className="form-container mt-5" onSubmit={sendData}>
       <h2 className="text-center">Add Student</h2>
       <div className="mb-3">
-        <label for="name">Name</label>
+        <label htmlFor="stuId">Student ID</label>
+        <input
+          type="text"
+          className="form-control"
+          id="stuId"
+          placeholder="Enter student ID"
+          onChange={(e) => {
+            setStuId(e.target.value);
+          }}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="name">Name</label>
         <input
           type="text"
           className="form-control"
@@ -65,7 +80,7 @@ const AddStudent = () => {
         />
       </div>
       <div className="mb-3">
-        <label for="age">Age</label>
+        <label htmlFor="age">Age</label>
         <input
           type="text"
           className="form-control"
@@ -77,16 +92,19 @@ const AddStudent = () => {
         />
       </div>
       <div className="mb-3">
-        <label for="gender">Gender</label>
-        <input
-          type="text"
+        <label htmlFor="gender">Gender</label>
+        <select
           className="form-control"
           id="gender"
-          placeholder="Enter gender"
+          value={gender}
           onChange={(e) => {
             setGender(e.target.value);
           }}
-        />
+        >
+          <option value="">Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
       </div>
       <div className="text-center">
         <button type="submit" className="btn btn-primary">

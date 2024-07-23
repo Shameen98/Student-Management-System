@@ -3,11 +3,13 @@ let Student = require("../models/Student.js");
 
 //student add
 router.route("/add").post((req, res) => {
+  stuId = req.body.stuId;
   name = req.body.name;
   age = Number(req.body.age);
   gender = req.body.gender;
 
-  const newStudent = Student({
+  const newStudent = new Student({
+    stuId,
     name,
     age,
     gender,
@@ -16,7 +18,7 @@ router.route("/add").post((req, res) => {
   newStudent
     .save()
     .then(() => {
-      console.log("Student added");
+      res.json("Student added");
     })
     .catch((err) => {
       console.log(err);
@@ -38,7 +40,7 @@ router.route("/").get((req, res) => {
 router.route("/get/:id").get((req, res) => {
   let stuId = req.params.id;
 
-  Student.findById(stuId)
+  Student.findOne({ stuId })
     .then((student) => {
       res.json(student);
     })
@@ -58,9 +60,9 @@ router.route("/update/:id").put(async (req, res) => {
     gender,
   };
 
-  const update = await Student.findByIdAndUpdate(stuId, updateStudent)
+  const update = await Student.findOneAndUpdate({ stuId }, updateStudent)
     .then(() => {
-      res.status(200).send({ status: "user updated", user: update });
+      res.status(200).send({ status: "user updated" });
     })
     .catch((err) => {
       console.log(err);
@@ -69,19 +71,50 @@ router.route("/update/:id").put(async (req, res) => {
 });
 
 //delete student
-router.route("/delete/:id").delete(async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   let stuId = req.params.id;
 
-  await Student.findByIdAndDelete(stuId)
-    .then(() => {
-      res.status(200).send({ status: "Deleted successfully" });
+  await Student.findOneAndDelete({ stuId })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({ status: "Student not found" });
+      }
+      res.status(200).send({ status: "Student deleted successfully" });
     })
     .catch((err) => {
       console.log(err.message);
       res
         .status(500)
-        .send({ status: "Error with delete user", err: err.message });
+        .send({ status: "Error with delete student", error: err.message });
     });
 });
+// router.delete("/delete/:id", async (req, res) => {
+//   let stuId = req.params.id;
+
+//   await Student.findOneAndDelete({ stuId })
+//     .then(() => {
+//       res.status(200).send({ status: "Deleted successfully" });
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//       res
+//         .status(500)
+//         .send({ status: "Error with delete user", err: err.message });
+//     });
+// });
+// router.route("/delete/:id").delete(async (req, res) => {
+//   let stuId = req.params.id;
+
+//   await Student.findOneAndDelete({ stuId })
+//     .then(() => {
+//       res.status(200).send({ status: "Deleted successfully" });
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//       res
+//         .status(500)
+//         .send({ status: "Error with delete user", err: err.message });
+//     });
+// });
 
 module.exports = router;
